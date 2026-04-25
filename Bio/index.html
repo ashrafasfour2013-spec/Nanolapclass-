@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تحدي تصنيف المركبات</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f0fdf4; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        .formula { font-size: 24px; font-weight: bold; color: #166534; margin: 20px 0; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; border: none; border-radius: 5px; font-size: 16px; }
+        .org { background: #22c55e; color: white; }
+        .inorg { background: #64748b; color: white; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🧪 هل المركب عضوي أم غير عضوي؟</h2>
+        <div id="display" class="formula">C₆H₁₂O₆</div>
+        <button class="org" onclick="check(true)">مركب عضوي</button>
+        <button class="inorg" onclick="check(false)">مركب غير عضوي</button>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        const compounds = [
+            { f: "C₆H₁₂O₆ (جلوكوز)", o: true, t: "لأنه يحتوي على الكربون والهيدروجين." },
+            { f: "H₂O (ماء)", o: false, t: "لأنه لا يحتوي على الكربون." },
+            { f: "CH₄ (ميثان)", o: true, t: "مركب هيدروكربوني عضوي بسيط." },
+            { f: "CO₂ (ثاني أكسيد الكربون)", o: false, t: "استثناء: يعتبر مركباً غير عضوي رغم وجود الكربون." }
+        ];
+        let current = 0;
+
+        function check(isOrganic) {
+            let item = compounds[current];
+            let fb = document.getElementById('feedback');
+            if(isOrganic === item.o) {
+                fb.innerHTML = "✅ أحسنت! " + item.t;
+                fb.style.color = "green";
+            } else {
+                fb.innerHTML = "❌ حاول مرة أخرى. " + item.t;
+                fb.style.color = "red";
+            }
+            current = (current + 1) % compounds.length;
+            setTimeout(() => { 
+                document.getElementById('display').innerText = compounds[current].f;
+                fb.innerHTML = "";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
